@@ -21,9 +21,9 @@ jobs:
     runs-on: ${{ matrix.platform }}
     steps:
     
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@main
     - name: Run Snyk to check for vulnerabilities
-      uses: snyk/actions/node@master
+      uses: snyk/actions/python-3.7@master
       env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       with:
