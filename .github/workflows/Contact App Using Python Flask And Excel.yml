@@ -20,6 +20,14 @@ jobs:
         python-version: [3.7]
     runs-on: ${{ matrix.platform }}
     steps:
+    
+    - uses: actions/checkout@master
+    - name: Run Snyk to check for vulnerabilities
+      uses: snyk/actions/node@master
+      env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      with:
+          command: monitor
     - uses: actions/checkout@v2
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v2
@@ -49,21 +57,22 @@ jobs:
         push: true
         context: Contact App Using Python Flask And Excel
         tags: virnahar/python_github_action:latest
-        
-    - name: Login to Heroku Container registry
-      env: 
-        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-      run: heroku container:login 
-    - name: Build and push
-      env:
-        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-      run: heroku container:push -a ${{ secrets.HEROKU_APP_NAME }} web 
-    - name: Release
-      env:
-        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-      run: |
-        heroku container:release -a ${{ secrets.HEROKU_APP_NAME }} web
-        sleep 50
+# Commenting below to disable deployments 
+
+#     - name: Login to Heroku Container registry
+#       env: 
+#         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+#       run: heroku container:login 
+#     - name: Build and push
+#       env:
+#         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+#       run: heroku container:push -a ${{ secrets.HEROKU_APP_NAME }} web 
+#     - name: Release
+#       env:
+#         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+#       run: |
+#         heroku container:release -a ${{ secrets.HEROKU_APP_NAME }} web
+#         sleep 50
         
         
         
